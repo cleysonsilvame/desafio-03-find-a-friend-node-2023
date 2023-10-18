@@ -30,18 +30,55 @@ Content-Type: application/json
 
 ###
 # @name refresh_token
-@refresh = {{refresh_token.response.headers.set-cookie}}
+# @refresh = {{refresh_token.response.headers.set-cookie}}
 @token = {{refresh_token.response.body.token}}
-# @refresh = {{authenticate_org.response.headers.set-cookie}}
+@refresh = {{authenticate_org.response.headers.set-cookie}}
 # @token = {{authenticate_org.response.body.token}}
 
 PATCH {{baseURL}}/token/refresh
 Cookie: {{refresh}}
 
 ###
-# @name test
-# @userId = 164ff15b-82a3-4967-a8e1-45bc494b92fb
-# @userId = {{authenticate_org.response.body.id}}
+# @name upload_pet_pictures
 
-POST {{baseURL}}/test
+POST {{baseURL}}/pets/pictures/upload
 Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="images"; filename="pet1.png"
+Content-Type: image/png
+
+< ./pet.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="images"; filename="pet2.png"
+Content-Type: image/png
+
+< ./pet.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+###
+# @name create_pet
+
+POST {{baseURL}}/pets
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "John Doe Pet",
+  "about": "John Doe Pet",
+  "age": "PUPPY",
+  "size": "SMALL",
+  "energy": "VERY_LOW",
+  "independence": "LOW",
+  "environment": "John Doe Pet",
+  "adoptionRequirements": [
+    "John Doe Pet",
+    "John Doe Pet"
+  ],
+  "petPictures": [
+    "{{upload_pet_pictures.response.body.files[0].url}}",
+    "{{upload_pet_pictures.response.body.files[1].url}}"
+  ]
+}
