@@ -4,18 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "tsx watch src/server.ts"
+    "start:dev": "tsx watch src/server.ts",
+    "test:ui": "vitest --ui"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
+    "@types/bcryptjs": "^2.4.4",
+    "@vitest/ui": "^0.34.6",
     "eslint": "^8.51.0",
+    "prisma": "^5.4.2",
     "tsx": "^3.13.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^0.34.6"
   },
   "dependencies": {
+    "@prisma/client": "^5.4.2",
     "bcryptjs": "^2.4.3",
     "fastify": "^4.24.2"
   }
