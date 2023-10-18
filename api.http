@@ -1,0 +1,47 @@
+@baseURL = http://localhost:3333
+
+###
+# @name create_org
+@email = johndoe@example.com
+@password = 123123123
+POST {{baseURL}}/orgs
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "cep": "12345678",
+  "address": "Rua John Doe",
+  "city": "John Doe",
+  "state": "John Doe",
+  "phone_number": "11900001111"
+}
+
+###
+# @name authenticate_org
+POST {{baseURL}}/sessions
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+# @name refresh_token
+@refresh = {{refresh_token.response.headers.set-cookie}}
+@token = {{refresh_token.response.body.token}}
+# @refresh = {{authenticate_org.response.headers.set-cookie}}
+# @token = {{authenticate_org.response.body.token}}
+
+PATCH {{baseURL}}/token/refresh
+Cookie: {{refresh}}
+
+###
+# @name test
+# @userId = 164ff15b-82a3-4967-a8e1-45bc494b92fb
+# @userId = {{authenticate_org.response.body.id}}
+
+POST {{baseURL}}/test
+Authorization: Bearer {{token}}

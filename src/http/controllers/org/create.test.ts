@@ -12,15 +12,6 @@ describe('Create Org (e2e)', () => {
   })
 
   it('should be able to create a org', async () => {
-    // name,
-    //   email,
-    //   password,
-    //   cep,
-    //   address,
-    //   city,
-    //   state,
-    //   phone_number,
-
     const response = await request(app.server).post('/orgs').send({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -33,5 +24,20 @@ describe('Create Org (e2e)', () => {
     })
 
     expect(response.statusCode).toEqual(201)
+  })
+
+  it('should not be able to create a org with same email from another', async () => {
+    const response = await request(app.server).post('/orgs').send({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
+      cep: '12345678',
+      address: 'Rua John Doe',
+      city: 'John Doe',
+      state: 'John Doe',
+      phone_number: '11900001111',
+    })
+
+    expect(response.statusCode).toEqual(409)
   })
 })
