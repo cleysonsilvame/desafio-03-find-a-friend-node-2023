@@ -1,10 +1,10 @@
-import request from 'supertest'
 import { app } from '@/app'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import request from 'supertest'
+import { afterAll, beforeAll, describe, it } from 'vitest'
 
 let token: string
 
-describe('Create Pet (e2e)', () => {
+describe('Get Pet by Id (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
 
@@ -31,7 +31,7 @@ describe('Create Pet (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to create a pet', async () => {
+  it('should be able to get a pet by id', async () => {
     const response = await request(app.server)
       .post('/pets')
       .set('Authorization', `Bearer ${token}`)
@@ -47,6 +47,13 @@ describe('Create Pet (e2e)', () => {
         petPictures: ['pet/picture'],
       })
 
-    expect(response.statusCode).toEqual(201)
+    await request(app.server)
+      .get(`/pets/details/${response.body.pet}`)
+      .send()
+      .expect(200)
+  })
+
+  it('should not be able to get a pet by id with invalid id', async () => {
+    await request(app.server).get('/pets/details/invalid-id').send().expect(400)
   })
 })

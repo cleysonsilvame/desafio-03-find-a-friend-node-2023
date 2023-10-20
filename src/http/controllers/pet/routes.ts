@@ -4,7 +4,7 @@ import { verifyJwt } from '@/http/middlewares/verify-jwt'
 import { uploadConfig } from '@/lib/multer'
 
 import { create } from './create'
-import { getPetByCity } from './get-pet-by-city'
+import { getPetByCity } from './get-pets-by-city'
 import { getPetById } from './get-pet-by-id'
 import { upload } from './upload'
 
