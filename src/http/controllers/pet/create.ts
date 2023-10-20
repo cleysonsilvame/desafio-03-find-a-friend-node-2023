@@ -3,8 +3,6 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
-  console.log(request.body)
-
   const registerBodySchema = z.object({
     name: z.string(),
     about: z.string(),

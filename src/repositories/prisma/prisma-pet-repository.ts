@@ -13,6 +13,7 @@ export class PrismaPetRepository implements PetRepository {
         org: {
           city,
         },
+        ...filters,
       },
     })
   }

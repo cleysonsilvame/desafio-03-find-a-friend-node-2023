@@ -69,8 +69,10 @@ Content-Type: application/json
   "name": "John Doe Pet",
   "about": "John Doe Pet",
   "age": "PUPPY",
-  "size": "SMALL",
-  "energy": "VERY_LOW",
+  "size": "MEDIUM",
+  # "size": "SMALL",
+  "energy": "VERY_HIGH",
+  # "energy": "VERY_LOW",
   "independence": "LOW",
   "environment": "John Doe Pet",
   "adoptionRequirements": [
@@ -82,3 +84,18 @@ Content-Type: application/json
     "{{upload_pet_pictures.response.body.files[1].url}}"
   ]
 }
+
+###
+# @name get_pets_by_city
+@city = {{create_org.request.body.city}}
+GET {{baseURL}}/pets/{{city}}
+  ?energy=VERY_HIGH
+  # &size=MEDIUM
+Content-Type: application/json
+
+###
+# @name get_pet_by_id
+@petId = 26460d63-d744-4ce1-aa9b-2958a180c569
+
+GET {{baseURL}}/pets/details/{{petId}}
+Content-Type: application/json
